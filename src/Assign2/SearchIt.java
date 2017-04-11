@@ -139,7 +139,7 @@ public class SearchIt {
             btn.setNumber(d.getNumber());
             btn.setAddress(d.getAddress());
 
-            bt.insertAVL(btn, d);
+            bt.insertBST(btn, d);
 
         }
 
