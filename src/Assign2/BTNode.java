@@ -27,6 +27,17 @@ public class BTNode {
 
     }
 
+    public BTNode(Data d, BTNode l, BTNode r) {
+
+        left = l;
+        right = r;
+        height = 0;
+        
+        name = d.getName();
+        number = d.getNumber();
+        address = d.getAddress();
+    }
+
     //Get children nodes
     public BTNode getLeft() {
 
@@ -50,7 +61,6 @@ public class BTNode {
 
     }
 
-    
     //Getters and setters
     public void setAddress(String address) {
         this.address = address;

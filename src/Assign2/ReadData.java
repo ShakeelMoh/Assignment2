@@ -29,7 +29,7 @@ public class ReadData {
         try {
 
             //Read data from textfile
-            Scanner sc = new Scanner(new File("/home/shakeel/NetBeansProjects/Assignment2/Data/testdata"));
+            Scanner sc = new Scanner(new File("/home/shakeel/NetBeansProjects/Assignment2/Data/RandomSampleData/5Entries"));
 
             while (sc.hasNextLine()) {
 

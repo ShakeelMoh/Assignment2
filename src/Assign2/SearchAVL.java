@@ -33,7 +33,7 @@ public class SearchAVL {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Insert (I) Delete (D) Search (S)?");
+        System.out.println("Insert (I) Delete (D) Search (S) Print (P)?");
         String choice = sc.nextLine();
 
         Instant start = Instant.now();
@@ -44,33 +44,39 @@ public class SearchAVL {
                 try {
 
                     //Read data from query file
-                    sc = new Scanner(new File("/home/shakeel/NetBeansProjects/Assignment2/Data/QueryFile"));
+                    sc = new Scanner(new File("/home/shakeel/NetBeansProjects/Assignment2/Data/RandomNames/5000Names"));
 
                     String searchTerm;
 
                     //Format data into tabular format
+                    if (choice.equals("S")){
                     System.out.println("Searching query file using BST (AVL) algorithm...\n\nResults:\n");
                     System.out.println("+------------------------------------------------------------------------------------------------------------------------------+");
                     System.out.println("|Name\t\t\t\t  |Number\t\t\t    |Address\t\t\t\t\t\t       |");
                     System.out.println("+------------------------------------------------------------------------------------------------------------------------------+");
+                    }
                     while (sc.hasNext()) {
 
                         searchTerm = sc.nextLine();
 
                         if (choice.equals("S")) {
                             bt.find(bt.getRoot(), searchTerm);
+
                         }
                         if (choice.equals("D")) {
-                            //bt.print();
-                            System.out.println("Deleting " + searchTerm);
-                            bt.delete(searchTerm, bt.getRoot());
-                            //bt.print();
+
+                            bt.AVLdelete(searchTerm);
+                            
 
                         }
 
                     }
-                    System.out.println("+------------------------------------------------------------------------------------------------------------------------------+");
-
+                    if(choice.equals("D")){
+                        bt.print();
+                    }
+                    if (choice.equals("S")){
+                        System.out.println("+------------------------------------------------------------------------------------------------------------------------------+");
+                    }
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(SearchAVL.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -79,13 +85,20 @@ public class SearchAVL {
 
                 System.out.println("Inserting...");
                 insertFromFile();
-                
+
+                break;
+            case "P":
+                //System.out.println(avl.balanceFactor(bt.getRoot()));
+
+                bt.print();
                 break;
             default:
-                System.out.println("Invalid Input");
+                System.out.println("Done");
                 break;
         }
 
+        //bt.print();
+        //System.out.println("+------------------------------------------------------------------------------------------------------------------------------+");
         //Time program execution
         Instant end = Instant.now();
         Duration timeElapsed = Duration.between(start, end);
@@ -121,7 +134,7 @@ public class SearchAVL {
 
             //Insert function from bt class
             //Insert btn, the new node with all its contents
-            bt.insertAVL(btn, d);
+            bt.insertAVL(d);
 
         }
 
@@ -138,19 +151,18 @@ public class SearchAVL {
         for (int i = 0; i < r.getListName().size(); i++) {
 
             d = new Data();
-            
+
             btn = new BTNode();
 
             d.name = r.getListName().get(i);
             d.number = r.getListNumber().get(i);
             d.address = r.getListAddress().get(i);
-            
+
             btn.setName(d.getName());
             btn.setNumber(d.getNumber());
             btn.setAddress(d.getAddress());
 
-            bt.insertAVL(btn, d);
-
+            bt.insertAVL(d, bt.getRoot());
         }
 
     }

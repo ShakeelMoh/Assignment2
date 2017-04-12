@@ -39,35 +39,21 @@ public class BT {
     }
 
     //Insert data into bst recursively
-    public void insertAVL(BTNode node, Data d) {
-        BTNode newNode = new BTNode(d);
-        if (root == null) {
-            root = newNode;
-            avl.balance(node);
-            return;
-        }
-        BTNode current = root;
-        BTNode parent = null;
+    public void insertAVL(Data d) {
+        root = insertAVL(d, root);
+    }
 
-        while (true) {
-            parent = current;
-            if (d.getName().compareTo(current.getName()) < 0) {
-                current = current.left;
-                if (current == null) {
-                    parent.left = newNode;
-                    avl.balance(node);
-                    return;
-                }
-            } else {
-                current = current.right;
-                if (current == null) {
-                    parent.right = newNode;
-                    avl.balance(node);
-                    return;
-                }
-            }
-        }
+    public BTNode insertAVL(Data d, BTNode node) {
+        if (node == null) {
+            return new BTNode(d, null, null);
 
+        }
+        if (d.getName().compareTo(node.getName()) <= 0) {
+            node.left = insertAVL(d, node.left);
+        } else {
+            node.right = insertAVL(d, node.right);
+        }
+        return avl.balance(node);
     }
 
     //Insert data into bst recursively
@@ -131,28 +117,80 @@ public class BT {
         System.out.println("|" + name + ": Not found");
         return false;
     }
-    
-        
-   public BTNode delete (String s, BTNode node )
-   {
-      if (node == null) return null;
-      if (s.compareTo (node.getName()) < 0)
-         node.left = delete (s, node.left);
-      else if (s.compareTo (node.getName()) > 0)
-         node.right = delete (s, node.right);
-      else
-      {
-         BTNode q = node.left;
-         BTNode r = node.right;
-         if (r == null)
-            return q;
-         BTNode min = avl.findMin (r);
-         min.right = avl.removeMin (r);
-         min.left = q;
-         return avl.balance (min);
-      }
-      return avl.balance (node);
-   }
+
+    public void AVLdelete(String s) {
+        root = AVLdelete(s, root);
+    }
+
+    public BTNode AVLdelete(String s, BTNode node) {
+        if (node == null) {
+            return null;
+        }
+        if (s.compareTo(node.getName()) < 0) {
+            node.left = AVLdelete(s, node.left);
+        } else if ((s).compareTo(node.getName()) > 0) {
+            node.right = AVLdelete(s, node.right);
+        } else {
+            BTNode q = node.left;
+            BTNode r = node.right;
+            if (r == null) {
+                return q;
+            }
+            BTNode min = findMin(r);
+            min.right = removeMin(r);
+            min.left = q;
+            return avl.balance(min);
+        }
+        return avl.balance(node);
+    }
+
+    public BTNode BSTdelete(String s, BTNode node) {
+        if (node == null) {
+            System.out.println("Cannot delete " + s + " (Not found)");
+            return null;
+        }
+        if (s.compareTo(node.getName()) < 0) {
+            node.left = BSTdelete(s, node.left);
+        } else if (s.compareTo(node.getName()) > 0) {
+            node.right = BSTdelete(s, node.right);
+        } else if (node.left != null && node.right != null) {
+
+            String n = findMin(node.right).getName();
+            String num = findMin(node.right).getNumber();
+            String add = findMin(node.right).getAddress();
+
+            node.setName(n);
+            node.setName(num);
+            node.setName(add);
+
+            node.right = removeMin(node.right);
+        } else if (node.left != null) {
+            node = node.left;
+        } else {
+            node = node.right;
+        }
+        return node;
+    }
+
+    public BTNode findMin(BTNode node) {
+        if (node != null) {
+            while (node.left != null) {
+                node = node.left;
+            }
+        }
+        return node;
+    }
+
+    public BTNode removeMin(BTNode node) {
+        if (node == null) {
+            return null;
+        } else if (node.left != null) {
+            node.left = removeMin(node.left);
+            return node;
+        } else {
+            return node.right;
+        }
+    }
 
     //Print bst in inorder fashion
     public void inorder() {
@@ -169,6 +207,25 @@ public class BT {
             System.out.print(r.getData() + "\n");
 
             inorder(r.getRight());
+
+        }
+
+    }
+
+    public void postOrder() {
+
+        postOrder(root);
+
+    }
+
+    public void postOrder(BTNode node) {
+
+        if (node != null) {
+
+            //visit left, right then parent
+            postOrder(node.getLeft());
+            postOrder(node.getRight());
+            System.out.println(node.getName());
 
         }
 
