@@ -36,15 +36,17 @@ public class SearchIt {
             try {
 
                 //Read data from query file
-                sc = new Scanner(new File("/home/shakeel/NetBeansProjects/Assignment2/Data/RandomNames/50000Names"));
+                sc = new Scanner(new File("/home/shakeel/NetBeansProjects/Assignment2/Data/RandomNames/5Names"));
 
                 String searchTerm;
 
                 //Format data into tabular format
-                System.out.println("Searching query file using BST algorithm...\n\nResults:\n");
-                System.out.println("+------------------------------------------------------------------------------------------------------------------------------+");
-                System.out.println("|Name\t\t\t\t  |Number\t\t\t    |Address\t\t\t\t\t\t       |");
-                System.out.println("+------------------------------------------------------------------------------------------------------------------------------+");
+                    if (choice.equals("S")){
+                    System.out.println("Searching query file using BST (AVL) algorithm...\n\nResults:\n");
+                    System.out.println("+------------------------------------------------------------------------------------------------------------------------------+");
+                    System.out.println("|Name\t\t\t\t  |Number\t\t\t    |Address\t\t\t\t\t\t       |");
+                    System.out.println("+------------------------------------------------------------------------------------------------------------------------------+");
+                    }
                 while (sc.hasNext()) {
 
                     searchTerm = sc.nextLine();
@@ -57,7 +59,12 @@ public class SearchIt {
                     }
 
                 }
-                System.out.println("+------------------------------------------------------------------------------------------------------------------------------+");
+                if(choice.equals("D")){
+                        //bt.print();
+                    }
+                    if (choice.equals("S")){
+                        System.out.println("+------------------------------------------------------------------------------------------------------------------------------+");
+                    }
 
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(SearchIt.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,6 +73,7 @@ public class SearchIt {
 
             System.out.println("Inserting...");
             insertFromFile();
+            bt.print();
         } else {
             System.out.println("Invalid Input");
         }
@@ -113,7 +121,7 @@ public class SearchIt {
     }
 
     public static void insertFromFile() {
-        System.out.println("Happens");
+        
         Data d;
         avl = new AVLTree();
 
@@ -134,7 +142,7 @@ public class SearchIt {
             btn.setNumber(d.getNumber());
             btn.setAddress(d.getAddress());
 
-            bt.insertBST(btn, d);
+            bt.insertBST(btn,d);
 
         }
 

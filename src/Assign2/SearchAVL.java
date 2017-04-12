@@ -44,7 +44,7 @@ public class SearchAVL {
                 try {
 
                     //Read data from query file
-                    sc = new Scanner(new File("/home/shakeel/NetBeansProjects/Assignment2/Data/RandomNames/5000Names"));
+                    sc = new Scanner(new File("/home/shakeel/NetBeansProjects/Assignment2/Data/QueryFile"));
 
                     String searchTerm;
 
@@ -85,6 +85,7 @@ public class SearchAVL {
 
                 System.out.println("Inserting...");
                 insertFromFile();
+                bt.print();
 
                 break;
             case "P":
@@ -93,8 +94,12 @@ public class SearchAVL {
                 bt.print();
                 break;
             default:
+                
+                
                 System.out.println("Done");
                 break;
+                
+                
         }
 
         //bt.print();
@@ -162,7 +167,7 @@ public class SearchAVL {
             btn.setNumber(d.getNumber());
             btn.setAddress(d.getAddress());
 
-            bt.insertAVL(d, bt.getRoot());
+            bt.insertAVL(d);
         }
 
     }
